@@ -213,7 +213,7 @@ fun PagerFooter(pages: List<OnBoardingPage>, pagerState: PagerState) {
                 .padding(2.dp)
                 .clip(CircleShape)
                 .background(color)
-                .size(12.dp)
+                .size(10.dp)
         ) {
 
         }
