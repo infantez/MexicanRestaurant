@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">Compose</string>
+
+    <!-- CONTENT DESCRIPTIONS -->
+    <!-- IMG -->
+    <string name="desc_background">Background</string>
+    <string name="desc_logo">Logo</string>
+    <string name="desc_food">Food</string>
+    <string name="desc_clear">Limpiar</string>
+    <string name="desc_visible">Mostrar</string>
+
+
+    <!-- BUTTONS -->
+    <string name="start">Iniciar</string>
+    <string name="begin">Empecemos</string>
+    <string name="enter">Ingresar</string>
+
+    <!-- TEXT -->
+    <string name="slogan">Una vida saludable</string>
+    <string name="input_info">Ingresar información</string>
+    <string name="into">Ingresa Aquí</string>
+    <string name="forget">¿Olvidaste tu contraseña?. </string>
+    <string name="not_register">¿Usted no tiene una cuenta?</string>
+    <string name="register">Registrate</string>
+
+
+    <!-- INPUT TEXT -->
+    <string name="email">Correo</string>
+    <string name="password">Contraseña</string>
+
+    <!-- NAVIGATION -->
+    <string name="explorer">Explora</string>
+    <string name="desc_explorer">Explora la gran variedad de comida que \nMéxico puede ofrecerte</string>
+    <string name="img_explorer">Imágen 01</string>
+
+    <string name="discover">Descubre</string>
+    <string name="desc_discover">Descubre todos los nutrientes que te pueden \naportar cada alimento o combinados</string>
+    <string name="img_discover">Imágen 02</string>
+
+    <string name="finder">Encuentra</string>
+    <string name="desc_finder">Encuentra tu plan de alimentación de acuerdo a \nlo que necesitas</string>
+    <string name="img_finder">Imágen 03</string>
+
+</resources>
