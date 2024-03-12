@@ -9,7 +9,6 @@
     <string name="desc_clear">Limpiar</string>
     <string name="desc_visible">Mostrar</string>
 
-
     <!-- BUTTONS -->
     <string name="start">Iniciar</string>
     <string name="begin">Empecemos</string>
@@ -18,11 +17,10 @@
     <!-- TEXT -->
     <string name="slogan">Una vida saludable</string>
     <string name="input_info">Ingresar información</string>
+    <string name="forget">¿Olvidaste tu contraseña?.\u0020</string>
     <string name="into">Ingresa Aquí</string>
-    <string name="forget">¿Olvidaste tu contraseña?. </string>
     <string name="not_register">¿Usted no tiene una cuenta?</string>
     <string name="register">Registrate</string>
-
 
     <!-- INPUT TEXT -->
     <string name="email">Correo</string>

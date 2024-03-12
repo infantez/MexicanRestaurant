@@ -124,12 +124,15 @@ fun OutlinedTextFieldComponents(
     keyboardOptions: KeyboardOptions,
     keyboardActions: KeyboardActions,
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    trailingIcon : @Composable (()->Unit) ? = null
+    trailingIcon : @Composable (()->Unit) ? = null,
+    onValuechange:(String)->Unit
 ) {
     OutlinedTextField(
         modifier = modifier,
         value = text,
-        onValueChange = {},
+        onValueChange = {
+            onValuechange(it)
+        },
         shape = RoundedCornerShape(cornerShapeDp),
         label = {
             Text(

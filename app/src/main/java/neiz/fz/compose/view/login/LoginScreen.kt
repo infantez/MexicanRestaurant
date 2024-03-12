@@ -1,5 +1,6 @@
 package neiz.fz.compose.view.login
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -14,10 +15,16 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,10 +39,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import neiz.fz.compose.R
+import neiz.fz.compose.data.model.LoginRequest
+import neiz.fz.compose.data.networking.Api
 import neiz.fz.compose.ui.theme.PrimaryColor
 import neiz.fz.compose.view.common.ButtonComponent
 import neiz.fz.compose.view.common.ImageComponent
@@ -111,15 +125,37 @@ fun HeaderLogin() {
 
 }
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun ContentLogin() {
+
+    var email by remember{
+        mutableStateOf("")
+    }
+
+    var password by remember{
+        mutableStateOf("")
+    }
+
+    var visualTransformation:Boolean by remember{
+        mutableStateOf(false)
+    }
+
+    /*
+    GlobalScope.launch(Dispatchers.Main) {
+        val response = withContext(Dispatchers.IO){
+            Api.build().logIn(LoginRequest(email = "jledesma2509@gmail.com", password = "123"))
+        }
+        println(response.body()?.message)
+    }
+    */
 
     TextComponent(
         text = stringResource(id = R.string.input_info),
         style = TextStyle(
             color = PrimaryColor,
             fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Normal
         )
     )
 
@@ -127,7 +163,7 @@ fun ContentLogin() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 8.dp),
-        text = "",
+        text = email,
         cornerShapeDp = 12.dp,
         textLabel = stringResource(id = R.string.email),
         style = TextStyle(
@@ -138,19 +174,22 @@ fun ContentLogin() {
             unfocusedBorderColor = Color.Black,
         ),
         keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Text,
-            imeAction = ImeAction.Next
+            keyboardType = KeyboardType.Email,
+            imeAction = ImeAction.Next,
         ),
         keyboardActions = KeyboardActions (
             onNext = {}
         ),
         trailingIcon = {
-            IconButton(onClick = { }) {
+            IconButton(onClick = { email = "" }) {
                 Icon (
                     imageVector = Icons.Filled.Clear,
                     contentDescription = stringResource(id = R.string.desc_clear)
                 )
             }
+        },
+        onValuechange = {
+            email = it
         }
     )
 
@@ -158,7 +197,7 @@ fun ContentLogin() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 8.dp),
-        text = "",
+        text = password,
         cornerShapeDp = 12.dp,
         textLabel = stringResource(id = R.string.password),
         style = TextStyle(
@@ -178,14 +217,23 @@ fun ContentLogin() {
             }
         ),
         trailingIcon = {
-            IconButton(onClick = { /*sTODO*/ }) {
+            IconButton(onClick = {
+                visualTransformation =! visualTransformation
+            }) {
                 Icon (
-                    imageVector = Icons.Filled.Visibility,
+                    imageVector = if (visualTransformation) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
                     contentDescription = stringResource(id = R.string.desc_visible)
                 )
             }
         },
-        visualTransformation = PasswordVisualTransformation()
+        visualTransformation = if (visualTransformation) {
+            VisualTransformation.None
+        } else {
+            PasswordVisualTransformation()
+        },
+        onValuechange = {
+            password = it
+        }
     )
 
     Box(

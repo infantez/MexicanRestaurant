@@ -74,5 +74,10 @@ dependencies {
     implementation("com.google.accompanist:accompanist-pager:0.28.0")
 
     // Materials icons 3
-    implementation("androidx.compose.material:material-icons-extended:1.6.0")
+    implementation("androidx.compose.material:material-icons-extended:1.6.3")
+
+    // Networking
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.2")
 }
