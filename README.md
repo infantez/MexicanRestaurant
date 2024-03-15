@@ -1,2 +1,2 @@
 # MexicanRestaurant
-Restaurant Mexicano App - JetPack Compose (Android)
+Restaurante Mexicano App - JetPack Compose (Android)
