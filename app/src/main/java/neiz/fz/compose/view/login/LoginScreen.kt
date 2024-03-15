@@ -81,12 +81,12 @@ fun LoginScreen(
     }
 
     if(state.error != null){
-        Toast.makeText(context, "${state.error}", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, "${state.error}", Toast.LENGTH_SHORT).show()
     }
 
 
     if(state.success != null){
-        Toast.makeText(context, state.success?.email, Toast.LENGTH_LONG).show()
+        Toast.makeText(context, state.success?.email, Toast.LENGTH_SHORT).show()
     }
 
     Box (
