@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import neiz.fz.compose.view.home.HomeScreen
 import neiz.fz.compose.view.login.LoginScreen
 import neiz.fz.compose.view.on_boarding.OnBoardingScreen
 import neiz.fz.compose.view.welcome.WelcomeScreen
@@ -34,7 +35,16 @@ fun SetupNavGraph() {
             )
         }
         composable(Screen.Login.route){
-            LoginScreen()
+            LoginScreen(
+                onNavigateHome = {
+                    navController.popBackStack()
+                    navController.navigate(route = Screen.Home.route)
+                }
+            )
+        }
+
+        composable(Screen.Home.route){
+            HomeScreen()
         }
     }
 }

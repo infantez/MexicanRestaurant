@@ -24,50 +24,41 @@ import androidx.compose.ui.unit.sp
 import neiz.fz.compose.R
 import neiz.fz.compose.ui.theme.Primary
 import neiz.fz.compose.ui.theme.PrimaryColor
+import neiz.fz.compose.view.common.BoxBackground
 import neiz.fz.compose.view.common.ButtonComponent
 import neiz.fz.compose.view.common.ImageComponent
 import neiz.fz.compose.view.common.SpacerComponent
 import neiz.fz.compose.view.common.TextComponent
 
 @Composable
-fun WelcomeScreen( onClick: () -> Unit ) {
+fun WelcomeScreen(onClick: () -> Unit) {
 
-    Box (
-        modifier = Modifier.fillMaxSize()
+    BoxBackground()
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.background),
-            contentDescription = stringResource(id = R.string.desc_background),
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier.matchParentSize(),
-            alpha = 0.2F)
 
-
-        Column(
+        Box(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
+                .weight(1f),
+            contentAlignment = Alignment.Center
         ) {
+            WelcomeHeader()
+        }
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                contentAlignment = Alignment.Center
-            ) {
-                WelcomeHeader()
-            }
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f), contentAlignment = Alignment.BottomCenter
-            ) {
-                WelcomeComponent(
-                    onClick = {
-                        onClick()
-                    }
-                )
-            }
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f), contentAlignment = Alignment.BottomCenter
+        ) {
+            WelcomeComponent(
+                onClick = {
+                    onClick()
+                }
+            )
         }
     }
 }
@@ -94,15 +85,14 @@ fun WelcomeHeader() {
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 color = Primary
-            )
-            ,modifier = Modifier.fillMaxWidth()
+            ), modifier = Modifier.fillMaxWidth()
         )
     }
 
 }
 
 @Composable
-fun WelcomeComponent(onClick:()->Unit) {
+fun WelcomeComponent(onClick: () -> Unit) {
 
     ImageComponent(
         image = R.drawable.food,

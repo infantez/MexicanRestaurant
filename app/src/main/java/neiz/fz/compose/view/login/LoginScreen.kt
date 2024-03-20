@@ -3,7 +3,6 @@ package neiz.fz.compose.view.login
 import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,6 +21,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,9 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -48,6 +46,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import neiz.fz.compose.R
 import neiz.fz.compose.ui.theme.PrimaryColor
+import neiz.fz.compose.view.common.BoxBackground
 import neiz.fz.compose.view.common.ButtonComponent
 import neiz.fz.compose.view.common.ImageComponent
 import neiz.fz.compose.view.common.OutlinedButtonComponent
@@ -61,17 +60,34 @@ import neiz.fz.compose.view.common.TextComponent
 
 @Composable
 fun LoginScreen(
-    viewmodel : LoginViewModel = hiltViewModel()
+    viewmodel: LoginViewModel = hiltViewModel(),
+    onNavigateHome: () -> Unit
 ) {
 
     val state = viewmodel.state
     val context = LocalContext.current
 
-    if(state.isLoading){
-        Box (
+    LaunchedEffect(
+        key1 = state.error,
+        key2 = state.success
+    ) {// Unit o true se ejecuta solo una vez key1, key2, key3
+        if (state.error != null) {
+            Toast.makeText(context, "${state.error}", Toast.LENGTH_SHORT).show()
+        }
+
+
+        if (state.success != null) {
+            Toast.makeText(context, "Bienvenido!", Toast.LENGTH_SHORT).show()
+            // Navigate to Home
+            onNavigateHome()
+        }
+        viewmodel.reset()
+    }
+
+    if (state.isLoading) {
+        Box(
             modifier = Modifier
-                .fillMaxSize()
-            , contentAlignment = Alignment.Center
+                .fillMaxSize(), contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator(
                 color = PrimaryColor,
@@ -80,64 +96,45 @@ fun LoginScreen(
         }
     }
 
-    if(state.error != null){
-        Toast.makeText(context, "${state.error}", Toast.LENGTH_SHORT).show()
-    }
+    BoxBackground()
 
-
-    if(state.success != null){
-        Toast.makeText(context, state.success?.email, Toast.LENGTH_SHORT).show()
-    }
-
-    Box (
+    Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.background),
-            contentDescription = stringResource(id = R.string.desc_background),
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier.matchParentSize(),
-            alpha = 0.2F
-        )
 
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
         ) {
+            HeaderLogin()
+        }
 
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-            ) {
-                HeaderLogin()
-            }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(4f)
+                .padding(start = 24.dp, end = 24.dp, top = 24.dp)
+        ) {
+            ContentLogin(viewmodel)
+        }
 
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(4f)
-                    .padding(start = 24.dp, end = 24.dp, top = 24.dp)
-            ) {
-                ContentLogin(viewmodel)
-            }
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(4f)
-                    .padding(top = 32.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                FooterLogin()
-            }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(4f)
+                .padding(top = 32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            FooterLogin()
         }
     }
-
 }
+
 
 @Composable
 fun HeaderLogin() {
-    Box (
+    Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
@@ -154,17 +151,17 @@ fun HeaderLogin() {
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-fun ContentLogin(viewmodel : LoginViewModel) {
+fun ContentLogin(viewmodel: LoginViewModel) {
 
-    var email by remember{
+    var email by remember {
         mutableStateOf("jledesma2509@gmail.com")
     }
 
-    var password by remember{
+    var password by remember {
         mutableStateOf("123")
     }
 
-    var visualTransformation:Boolean by remember{
+    var visualTransformation: Boolean by remember {
         mutableStateOf(false)
     }
 
@@ -204,12 +201,12 @@ fun ContentLogin(viewmodel : LoginViewModel) {
             keyboardType = KeyboardType.Email,
             imeAction = ImeAction.Next,
         ),
-        keyboardActions = KeyboardActions (
+        keyboardActions = KeyboardActions(
             onNext = {}
         ),
         trailingIcon = {
             IconButton(onClick = { email = "" }) {
-                Icon (
+                Icon(
                     imageVector = Icons.Filled.Clear,
                     contentDescription = stringResource(id = R.string.desc_clear)
                 )
@@ -238,16 +235,16 @@ fun ContentLogin(viewmodel : LoginViewModel) {
             keyboardType = KeyboardType.Text,
             imeAction = ImeAction.Done
         ),
-        keyboardActions = KeyboardActions (
+        keyboardActions = KeyboardActions(
             onDone = {
 
             }
         ),
         trailingIcon = {
             IconButton(onClick = {
-                visualTransformation =! visualTransformation
+                visualTransformation = !visualTransformation
             }) {
-                Icon (
+                Icon(
                     imageVector = if (visualTransformation) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
                     contentDescription = stringResource(id = R.string.desc_visible)
                 )
@@ -284,7 +281,6 @@ fun ContentLogin(viewmodel : LoginViewModel) {
     }
 
 
-
 }
 
 @Composable
@@ -293,7 +289,7 @@ fun FooterLogin() {
     TextAnotationComponent(
         text = buildAnnotatedString {
             append(stringResource(id = R.string.forget))
-            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, color = PrimaryColor)){
+            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, color = PrimaryColor)) {
                 append(stringResource(id = R.string.into))
             }
         },
@@ -333,7 +329,6 @@ fun FooterLogin() {
             .height(48.dp)
             .padding(horizontal = 24.dp)
     )
-
 
 
 }

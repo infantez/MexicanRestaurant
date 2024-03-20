@@ -36,6 +36,7 @@ import com.google.accompanist.pager.rememberPagerState
 import neiz.fz.compose.R
 import neiz.fz.compose.ui.theme.PrimaryColor
 import neiz.fz.compose.ui.theme.PrimaryText
+import neiz.fz.compose.view.common.BoxBackground
 import neiz.fz.compose.view.common.ImageComponent
 import neiz.fz.compose.view.common.TextComponent
 
@@ -68,16 +69,7 @@ fun OnBoardingScreen(
         )
     )
 
-    Box (
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.background),
-            contentDescription = stringResource(id = R.string.desc_background),
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier.matchParentSize(),
-            alpha = 0.2F
-        )
+    BoxBackground()
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -119,8 +111,6 @@ fun OnBoardingScreen(
             )
         }
     }
-    }
-
 }
 
 @OptIn(ExperimentalPagerApi::class)
