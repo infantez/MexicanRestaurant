@@ -39,4 +39,10 @@
     <string name="desc_finder">Encuentra tu plan de alimentación de acuerdo a \nlo que necesitas</string>
     <string name="img_finder">Imágen 03</string>
 
+    <!-- TOKEN -->
+    <string name="key_token">KEY_TOKEN</string>
+
+    <!-- MESSAGES -->
+    <string name="disconnected">Compruebe su conexión a Internet</string>
+
 </resources>

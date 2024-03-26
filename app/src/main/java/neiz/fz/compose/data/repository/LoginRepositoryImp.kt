@@ -1,5 +1,6 @@
 package neiz.fz.compose.data.repository
 
+import android.content.SharedPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import neiz.fz.compose.core.Result
@@ -9,8 +10,9 @@ import neiz.fz.compose.domain.model.User
 import neiz.fz.compose.domain.model.toUser
 import neiz.fz.compose.domain.repository.LoginRepository
 import okio.IOException
+import javax.inject.Inject
 
-class LoginRepositoryImp : LoginRepository{
+class LoginRepositoryImp @Inject constructor(val sharedPreferences: SharedPreferences): LoginRepository{
     override suspend fun signIn(email: String, password: String) : Flow<Result<User>> = flow {
         try {
 
@@ -27,9 +29,8 @@ class LoginRepositoryImp : LoginRepository{
                 val loginResponse = response.body()
                 if(loginResponse?.success == true){
                     // Usuario existe
+                    sharedPreferences.edit().putString("KEY_TOKEN", loginResponse.data.token).apply()
                     emit(Result.Success(data = loginResponse.data.toUser()))
-
-
                 } else {
                     // Usuario no existe
                     emit(Result.Error(message = loginResponse?.message))

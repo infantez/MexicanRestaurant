@@ -5,21 +5,24 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import neiz.fz.compose.core.Result
 import neiz.fz.compose.data.repository.LoginRepositoryImp
+import neiz.fz.compose.domain.repository.DishRepository
 import neiz.fz.compose.domain.repository.LoginRepository
-
-class LoginViewModel : ViewModel() {
+import javax.inject.Inject
+@HiltViewModel
+class LoginViewModel @Inject constructor(val repository: LoginRepository): ViewModel() {
 
     //State
     var state by mutableStateOf(LoginState())
 
     fun signIn(email:String, password:String){
 
-        val repository : LoginRepository = LoginRepositoryImp()
+        // val repository : LoginRepository = LoginRepositoryImp()
 
         viewModelScope.launch {
             repository.signIn(email, password).onEach {
