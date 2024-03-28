@@ -94,4 +94,9 @@ dependencies {
 
     // SECURITY CRYPTO
     implementation("androidx.security:security-crypto:1.0.0")
+
+    // ROOM SQL DEPENDENCE
+    implementation("androidx.room:room-ktx:2.6.0")
+    implementation("androidx.room:room-runtime:2.6.0")
+    kapt("androidx.room:room-compiler:2.6.0")
 }

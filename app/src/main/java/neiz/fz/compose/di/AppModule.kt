@@ -14,6 +14,10 @@ import neiz.fz.compose.data.repository.LoginRepositoryImp
 import neiz.fz.compose.domain.repository.DishRepository
 import neiz.fz.compose.domain.repository.LoginRepository
 import javax.inject.Singleton
+import androidx.room.Room
+import neiz.fz.compose.data.database.AppDatabase
+import neiz.fz.compose.data.database.dao.DishDao
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -36,13 +40,20 @@ class AppModule  {
 
     @Provides
     @Singleton
-    fun provideLoginRepository(sharedPreferences: SharedPreferences): LoginRepository{
-        return LoginRepositoryImp(sharedPreferences)
+    fun provideDishRepository(sharedPreferences: SharedPreferences, dishDao: DishDao) : DishRepository{
+        return DishRepositoryImp(sharedPreferences,dishDao)
     }
 
     @Provides
     @Singleton
-    fun provideDishRepository(sharedPreferences: SharedPreferences): DishRepository {
-        return DishRepositoryImp(sharedPreferences)
-    }
+    fun provideDatabase(@ApplicationContext context: Context) : AppDatabase = Room.databaseBuilder(
+        context,
+        AppDatabase::class.java,
+        "dbMX"
+    ).build()
+
+    @Provides
+    @Singleton
+    fun provideDao(db:AppDatabase) : DishDao = db.dishDao()
+
 }

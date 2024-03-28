@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -196,16 +198,23 @@ fun PagerOnBoarding(onBoardingPage: OnBoardingPage) {
 fun PagerFooter(pages: List<OnBoardingPage>, pagerState: PagerState) {
 
     repeat(pages.size){interaction->
-        val color = if(pagerState.currentPage == interaction) PrimaryColor else Color.LightGray
+        var currentColor = Color.LightGray
+        var currentSize = 10.dp
+
+        if(pagerState.currentPage == interaction) {
+            currentColor = PrimaryColor
+            currentSize = 35.dp
+        }
+
         Box(
             modifier = Modifier
                 .padding(2.dp)
+                .height(10.dp)
+                .width(width = currentSize)
                 .clip(CircleShape)
-                .background(color)
-                .size(10.dp)
+                .background(currentColor)
         ) {
 
         }
     }
-
 }

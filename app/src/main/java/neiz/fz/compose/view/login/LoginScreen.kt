@@ -44,6 +44,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import dagger.Provides
 import neiz.fz.compose.R
 import neiz.fz.compose.ui.theme.PrimaryColor
 import neiz.fz.compose.view.common.BoxBackground
@@ -54,6 +55,7 @@ import neiz.fz.compose.view.common.OutlinedTextFieldComponents
 import neiz.fz.compose.view.common.SpacerComponent
 import neiz.fz.compose.view.common.TextAnotationComponent
 import neiz.fz.compose.view.common.TextComponent
+import javax.inject.Singleton
 
 // Suscribir ViewModel
 // Inyección de dependencias : HILT, DAGGER, KOIN

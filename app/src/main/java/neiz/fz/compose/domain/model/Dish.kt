@@ -1,6 +1,7 @@
 package neiz.fz.compose.domain.model
 
-import neiz.fz.compose.data.model.DishDTO
+import neiz.fz.compose.data.database.model.DishEntity
+import neiz.fz.compose.data.networking.model.DishDTO
 
 data class Dish(
     val id: Int,
@@ -29,5 +30,22 @@ fun List<DishDTO>.toDishList(): List<Dish> = map {
         price= it.price,
         ingredients= it.ingredients,
         flagHeader= it.flagHeader
+    )
+}
+
+fun Dish.ToDishEntity() : DishEntity {
+    return DishEntity(
+        id = id,
+        name = name,
+        description = description,
+        thumbails = thumbails,
+        image = image,
+        carbohydrates = carbohydrates,
+        proteins = proteins,
+        price = price,
+        rating = rating,
+        ingredients = ingredients,
+        flagHeader = flagHeader,
+        flag = true
     )
 }

@@ -1,6 +1,6 @@
 package neiz.fz.compose.domain.model
 
-import neiz.fz.compose.data.model.UserDTO
+import neiz.fz.compose.data.networking.model.UserDTO
 
 data class User (
     val id : Int,

@@ -6,6 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.gson.Gson
+import neiz.fz.compose.domain.model.Dish
 import neiz.fz.compose.view.dish.DishScreen
 import neiz.fz.compose.view.dishdetail.DishDetailScreen
 import neiz.fz.compose.view.search.SearchScreen
@@ -19,7 +21,13 @@ fun SetupNavGraphHome(paddingValues: PaddingValues, navController: NavHostContro
         startDestination = ScreenHome.Dish.route
     ){
         composable(ScreenHome.Dish.route){
-            DishScreen(paddingValues = paddingValues)
+            DishScreen(
+                paddingValues = paddingValues,
+                onSelectedItem = { dish ->
+                    val dishJson = Gson().toJson(dish)
+                    navController.navigate(ScreenHome.DishDetail.createRoute(dishJson))
+                }
+            )
         }
 
         composable(ScreenHome.Search.route){
@@ -31,7 +39,9 @@ fun SetupNavGraphHome(paddingValues: PaddingValues, navController: NavHostContro
         }
 
         composable(ScreenHome.DishDetail.route){
-            DishDetailScreen(paddingValues = paddingValues)
+            val dishJson = it.arguments?.getString("dishJson")
+            val dish = Gson().fromJson(dishJson, Dish::class.java)
+            DishDetailScreen(paddingValues = paddingValues, dish = dish)
         }
 
     }

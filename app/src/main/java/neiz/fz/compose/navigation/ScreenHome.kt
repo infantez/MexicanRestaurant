@@ -8,7 +8,9 @@ sealed class ScreenHome (val route:String){
 
     object Setting : ScreenHome(route = "setting_screen")
 
-    object DishDetail : ScreenHome(route = "dishDetail_screen")
+    object DishDetail : ScreenHome(route = "dishDetail_screen/?dishJson={dishJson}"){
+        fun createRoute(dishJson:String) = "dishDetail_screen/?dishJson=$dishJson"
+    }
 
 
 }

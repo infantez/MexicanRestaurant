@@ -8,4 +8,6 @@ interface DishRepository {
 
     suspend fun getDishes() : Flow<Result<List<Dish>>>
 
+    suspend fun saveDish(dish:Dish)
+    
 }

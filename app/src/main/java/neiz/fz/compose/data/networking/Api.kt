@@ -1,18 +1,18 @@
 package neiz.fz.compose.data.networking
 
-import neiz.fz.compose.data.model.DishResponse
-import neiz.fz.compose.data.model.LoginRequest
-import neiz.fz.compose.data.model.LoginResponse
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
+
+import dagger.Provides
+import neiz.fz.compose.data.networking.model.DishResponse
+import neiz.fz.compose.data.networking.model.LoginRequest
+import neiz.fz.compose.data.networking.model.LoginResponse
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import javax.inject.Singleton
 
 object Api {
 
