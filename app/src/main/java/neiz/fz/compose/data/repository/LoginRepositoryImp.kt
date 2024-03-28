@@ -37,9 +37,7 @@ class LoginRepositoryImp @Inject constructor(val sharedPreferences: SharedPrefer
                 if (loginResponse?.success == true) {
                     // Usuario existe
                     sharedPreferences.edit().putString("KEY_TOKEN", loginResponse.data.token).apply()
-                    if (loginResponse != null) {
-                        emit(Result.Success(data = loginResponse.data.toUser()))
-                    }
+                    emit(Result.Success(data = loginResponse.data.toUser()))
                 } else {
                     // Usuario no existe
                     emit(Result.Error(message = loginResponse?.message))

@@ -21,14 +21,11 @@ import neiz.fz.compose.data.database.dao.DishDao
 
 @Module
 @InstallIn(SingletonComponent::class)
-class AppModule  {
-
+class AppModule {
     @Provides
     @Singleton
-    fun provideSharePreferences(@ApplicationContext context : Context) : SharedPreferences {
-
+    fun provideSharePreferences(@ApplicationContext context: Context): SharedPreferences {
         val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
-
         return EncryptedSharedPreferences.create(
             "PREFERENCES_TOKEN",
             masterKeyAlias,
@@ -40,20 +37,30 @@ class AppModule  {
 
     @Provides
     @Singleton
-    fun provideDishRepository(sharedPreferences: SharedPreferences, dishDao: DishDao) : DishRepository{
-        return DishRepositoryImp(sharedPreferences,dishDao)
+    fun provideLoginRepository(sharedPreferences: SharedPreferences): LoginRepository {
+        return LoginRepositoryImp(sharedPreferences)
     }
 
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context) : AppDatabase = Room.databaseBuilder(
-        context,
-        AppDatabase::class.java,
-        "dbMX"
-    ).build()
+    fun provideDishRepository(
+        sharedPreferences: SharedPreferences,
+        dishDao: DishDao
+    ): DishRepository {
+        return DishRepositoryImp(sharedPreferences, dishDao)
+    }
 
     @Provides
     @Singleton
-    fun provideDao(db:AppDatabase) : DishDao = db.dishDao()
+    fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
+        Room.databaseBuilder(
+            context,
+            AppDatabase::class.java,
+            "dbMXN"
+        ).build()
+
+    @Provides
+    @Singleton
+    fun provideDao(db: AppDatabase): DishDao = db.dishDao()
 
 }
